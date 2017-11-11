@@ -1,8 +1,8 @@
 describe 'Radio Shows' do
-  before { visit url }
+  before { visit radio_show_url(show) }
 
   context 'The Urbanist' do
-    let(:url) { 'https://monocle.com/radio/shows/the-urbanist/' }
+    let(:show) { 'the-urbanist' }
     let(:first_article_link) { page.first('.tb_desc-link') }
 
     example 'Latest article is valid' do
