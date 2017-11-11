@@ -9,6 +9,7 @@ services:
       - .:/check-monocle
     volumes_from:
       - bundle
+    dns: 8.8.8.8
   bundle:
     image: busybox
     volumes:
