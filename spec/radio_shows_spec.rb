@@ -1,6 +1,7 @@
 describe 'Radio Shows' do
   shared_examples_for 'latest show' do
     example 'Latest show is valid' do
+      visit radio_show_url(show)
       latest_show_link.click
       assert_page_has_title
       assert_page_has_hero
@@ -10,7 +11,16 @@ describe 'Radio Shows' do
   end
 
   shared_examples_for 'soon to be released show' do
-    example 'Soon to be released show is valid' do
+    example 'Soon to be released show is valid' do |example|
+      skip 'Do not run on Monday' if Time.now.monday? and !example.metadata[:monday]
+      skip 'Do not run on Tuesday' if Time.now.tuesday? and !example.metadata[:tuesday]
+      skip 'Do not run on Wednesday' if Time.now.wednesday? and !example.metadata[:wednesday]
+      skip 'Do not run on Thursday' if Time.now.thursday? and !example.metadata[:thursday]
+      skip 'Do not run on Friday' if Time.now.friday? and !example.metadata[:friday]
+      skip 'Do not run on Saturday' if Time.now.saturday? and !example.metadata[:saturday]
+      skip 'Do not run on Sunday' if Time.now.sunday?
+
+      visit radio_show_url(show)
       visit next_show_url
       assert_page_has_title
       assert_page_has_hero
@@ -20,83 +30,86 @@ describe 'Radio Shows' do
   end
 
   context 'Culture with Robert Bound', monday: true do
-    before { visit radio_show_url('culture-with-robert-bound') }
+    let(:show) { 'culture-with-robert-bound' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
   context 'Section D', tuesday: true do
-    before { visit radio_show_url('section-d') }
+    let(:show) { 'section-d' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
   context 'The Entrepreneurs', wednesday: true do
-    before { visit radio_show_url('the-entrepreneurs') }
+    let(:show) { 'the-entrepreneurs' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
   context 'The Urbanist', thursday: true do
-    before { visit radio_show_url('the-urbanist') }
+    let(:show) { 'the-urbanist' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
-  context 'The Sessions', weekend: true do
-    before { visit radio_show_url('the-sessions-at-midori-house') }
+  context 'The Sessions', friday: true do
+    let(:show) { 'the-sessions-at-midori-house' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
-  context 'The Menu', weekend: true do
-    before { visit radio_show_url('the-menu') }
+  context 'The Menu', friday: true do
+    let(:show) { 'the-menu' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
-  context 'The Curator', weekend: true do
-    before { visit radio_show_url('the-curator') }
+  context 'The Curator', friday: true do
+    let(:show) { 'the-curator' }
 
     example 'Latest show is valid' do
+      visit radio_show_url(show)
       latest_show_link.click
       assert_page_has_title
       assert_page_has_description
     end
 
     example 'Soon to be released show is valid' do
+      skip 'Only run on Friday' unless Time.now.friday?
+      visit radio_show_url(show)
       visit next_show_url
       assert_page_has_title
       assert_page_has_description
     end
   end
 
-  context 'The Stack', weekend: true do
-    before { visit radio_show_url('the-stack') }
+  context 'The Stack', friday: true do
+    let(:show) { 'the-stack' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
-  context 'The Foreign Desk', weekend: true do
-    before { visit radio_show_url('the-foreign-desk') }
+  context 'The Foreign Desk', friday: true do
+    let(:show) { 'the-foreign-desk' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
-  context 'Meet the Writers', weekend: true do
-    before { visit radio_show_url('meet-the-writers') }
+  context 'Meet the Writers', friday: true do
+    let(:show) { 'meet-the-writers' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
-  context 'The Monocle Weekly', weekend: true do
-    before { visit radio_show_url('the-monocle-weekly') }
+  context 'The Monocle Weekly', saturday: true do
+    let(:show) { 'the-monocle-weekly' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
 
-  context 'The Bulletin with UBS', weekend: true do
-    before { visit radio_show_url('the-bulletin-with-ubs') }
+  context 'The Bulletin with UBS', saturday: true do
+    let(:show) { 'the-bulletin-with-ubs' }
     include_examples 'latest show'
     include_examples 'soon to be released show'
   end
