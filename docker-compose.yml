@@ -1,0 +1,15 @@
+version: '2'
+services:
+  spec:
+    build: .
+    environment:
+      - BUNDLE_PATH=/bundle
+    working_dir: /check-monocle
+    volumes:
+      - .:/check-monocle
+    volumes_from:
+      - bundle
+  bundle:
+    image: busybox
+    volumes:
+      - /bundle
