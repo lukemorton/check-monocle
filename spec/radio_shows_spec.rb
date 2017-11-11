@@ -130,7 +130,7 @@ describe 'Radio Shows' do
   def assert_page_has_hero
     hero_style_attr = page.find('.radio-hero')['style']
     expect(hero_style_attr).to_not include('generic-episode-photo')
-    expect(hero_style_attr).to include('jpg')
+    expect(hero_style_attr).to match(/jpg|jpeg/)
   end
 
   def assert_page_has_description
