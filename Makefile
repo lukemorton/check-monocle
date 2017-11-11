@@ -8,7 +8,7 @@ once:
 
 __docker_once:
 	bundle check || bundle install
-	bundle exec rspec
+	bundle exec rspec spec/*_spec.rb
 
 shell:
 	docker-compose run --rm spec bash
