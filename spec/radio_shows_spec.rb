@@ -1,9 +1,7 @@
 describe 'Radio Shows' do
   shared_examples_for 'latest show' do
-    let(:latest_article_link) { page.first('.tb_desc-link') }
-
-    example 'Latest article is valid' do
-      latest_article_link.click
+    example 'Latest show is valid' do
+      latest_show_link.click
       assert_page_has_title
       assert_page_has_hero
       assert_page_has_description
@@ -12,8 +10,8 @@ describe 'Radio Shows' do
   end
 
   shared_examples_for 'soon to be released show' do
-    example 'Soon to be released article is valid' do
-      visit next_article_url
+    example 'Soon to be released show is valid' do
+      visit next_show_url
       assert_page_has_title
       assert_page_has_hero
       assert_page_has_description
@@ -60,14 +58,14 @@ describe 'Radio Shows' do
   context 'The Curator', weekend: true do
     before { visit radio_show_url('the-curator') }
 
-    example 'Latest article is valid' do
-      latest_article_link.click
+    example 'Latest show is valid' do
+      latest_show_link.click
       assert_page_has_title
       assert_page_has_description
     end
 
-    example 'Soon to be released article is valid' do
-      visit next_article_url
+    example 'Soon to be released show is valid' do
+      visit next_show_url
       assert_page_has_title
       assert_page_has_description
     end
@@ -103,7 +101,11 @@ describe 'Radio Shows' do
     include_examples 'soon to be released show'
   end
 
-  # Based on current URL, we guess the next article URL by incrementing the ID
+  def latest_show_link
+    page.first('.tb_icon .icon.episode:not(.star)').find(:xpath, '../../..').find('.tb_desc a')
+  end
+
+  # Based on current URL, we guess the next show URL by incrementing the ID
   # found in the current URL.
   #
   # Example:
@@ -114,10 +116,10 @@ describe 'Radio Shows' do
   #
   #   https://monocle.com/radio/shows/the-urbanist/319/
   #
-  def next_article_url
-    article_number = latest_article_link['href'].scan(/\/(\d+)\//)[0][0]
-    next_article_number = article_number.to_i.next.to_s
-    next_article_url = latest_article_link['href'].sub(article_number, next_article_number)
+  def next_show_url
+    show_number = latest_show_link['href'].scan(/\/(\d+)\//)[0][0]
+    next_show_number = show_number.to_i.next.to_s
+    next_show_url = latest_show_link['href'].sub(show_number, next_show_number)
   end
 
   # We assert the the <h1> content is found and used in <title>
