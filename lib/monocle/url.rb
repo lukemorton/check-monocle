@@ -12,8 +12,8 @@ module Monocle
       @origin = 'https://monocle.com'
     end
 
-    def radio_show_url(show)
-      "#{origin}/radio/shows/#{show}/"
+    def radio_show_url(*show)
+      "#{origin}/radio/shows/#{show.join('/')}/"
     end
   end
 end

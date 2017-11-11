@@ -8,4 +8,10 @@ describe Monocle::Url do
 
     it { is_expected.to eq("#{origin}/radio/shows/the-urbanist/") }
   end
+
+  context 'when building radio show episode url' do
+    subject { described_class.new.radio_show_url('the-urbanist', '318') }
+
+    it { is_expected.to eq("#{origin}/radio/shows/the-urbanist/318/") }
+  end
 end
