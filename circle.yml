@@ -19,10 +19,10 @@ jobs:
           paths:
             - vendor/bundle
 
-      - run: bundle exec rspec
+      - run: bundle exec rspec --format RspecJunitFormatter -o /tmp/rspec.xml
 
       - store_test_results:
-          path: test_results
+          path: /tmp/rspec.xml
 
 workflows:
   version: 2
