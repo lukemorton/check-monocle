@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.4-browsers
+    parallelism: 4
     steps:
       - checkout
 
