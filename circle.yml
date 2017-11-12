@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.4-browsers
-    parallelism: 4
     steps:
       - checkout
 
@@ -20,7 +19,7 @@ jobs:
           paths:
             - vendor/bundle
 
-      - test
+      - run: bundle exec rspec
 
       - store_test_results:
           path: test_results
