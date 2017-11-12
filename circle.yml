@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    docker:
+      image: circleci/ruby:2.4
+    steps:
+      - checkout
+
+      # Restore bundle cache
+      - restore_cache:
+          key: rails-demo-{{ checksum "Gemfile.lock" }}
+
+      # Bundle install dependencies
+      - run: bundle install --path vendor/bundle
+
+      # Store bundle cache
+      - save_cache:
+          key: rails-demo-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run: bundle exec rspec
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
