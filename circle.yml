@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       image: circleci/ruby:2.4
+    machine: true
     steps:
       - checkout
 
