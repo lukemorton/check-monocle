@@ -24,10 +24,12 @@ jobs:
 
 workflows:
   version: 2
-  commit:
+  build:
     jobs:
       - build
   nightly:
+    jobs:
+      - build
     triggers:
       - schedule:
           cron: "0 0 * * *"
