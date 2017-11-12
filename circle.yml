@@ -23,6 +23,10 @@ jobs:
 
 workflows:
   version: 2
+  build:
+    jobs:
+      - build
+
   nightly:
     jobs:
       - build
