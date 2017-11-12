@@ -1,8 +1,8 @@
 version: 2
 jobs:
   build:
-    docker: circleci/ruby:2.4
-    machine: true
+    docker:
+      - image: circleci/ruby:2.4
     steps:
       - checkout
 
