@@ -20,7 +20,10 @@ jobs:
           paths:
             - vendor/bundle
 
-      - run: bundle exec rspec
+      - test
+
+      - store_test_results:
+          path: test_results
 
 workflows:
   version: 2
